@@ -66,7 +66,7 @@ const parseConditional = (rcktfun) => {
     let res = "could not interpret"
     switch(rcktfun[0]){
         case "if":
-            res = "if (" + isArr(rcktfun[1]) + "){\n" + isArr(rcktfun[2]) + "} else {\n" + isArr(rcktfun[3]) + "}\n"
+            res = "if (" + isArr(rcktfun[1]) + "){\n\tconsole.log(" + isArr(rcktfun[2]) + ")\n} \nelse {\n\tconsole.log(" + isArr(rcktfun[3]) + ")\n}\n"
             break;
         case "or":
             res = isArr(rcktfun[1]) + " || " + isArr(rcktfun[2])
@@ -103,7 +103,7 @@ const parseDefinition = (rktfun) => {
     for (let i=1;i<paramaterArray.length;i++){
         parameters+= paramaterArray[i] + " "
     }
-    res = "const " + rktfun[1][0] + " = (" + parameters + ") => {\n" + isArr(rktfun[2]) + "\n}\nconsole.log(" + rktfun[1][0] + ")\n\n"
+    res = "const " + rktfun[1][0] + " = (" + parameters + ") => { \n\treturn " + isArr(rktfun[2]) + "\n}\nconsole.log(" + rktfun[1][0] + "())\n\n"
     return res
 }
 
@@ -140,4 +140,4 @@ let doCategorisation = (rktfun) => {
 
 // CATEGORISATION ENDS
 
-exports = doCategorisation;
+module.exports = doCategorisation;

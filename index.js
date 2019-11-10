@@ -1,4 +1,6 @@
 const fs = require('fs');
+const categorise = require('./categorise');
+const parse = require('./parse');
 
 if(process.argv.length !== 4) {
     console.error('Invalid number of parameters!')
@@ -10,7 +12,7 @@ if(process.argv.length !== 4) {
 const inFile = process.argv[2];
 const outFile = process.argv[3];
 
-let inCode, outCode;
+let inCode, outCode = '';
 
 try {
     inCode = fs.readFileSync(inFile, { encoding: 'utf8' });
@@ -20,9 +22,14 @@ catch(e) {
     process.exit(-1);
 }
 
-console.log(inCode);
+inCode = inCode.split('\n');
+for(let i = 0; i < inCode.length; i++) {
+    const broken = parse(inCode[i]);
+    const JScode = categorise(broken);
+    //console.log(JScode);
+    outCode += JScode + '\n';
+}
 
-outCode = 'alert("racket.js")';
 
 try {
     fs.writeFileSync(outFile, outCode);
